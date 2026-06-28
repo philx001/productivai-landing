@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { apps } from '@/lib/data';
 import { cn } from '@/lib/utils';
-import AppMockup from './AppMockup';
+import WorkflowDiagram from './WorkflowDiagram';
 
 export default function AppsSection() {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -33,7 +33,7 @@ export default function AppsSection() {
             Nos <span className="gradient-text">réalisations</span>
           </h2>
           <p className="mx-auto max-w-2xl text-zinc-400">
-            Des applications complètes, en production. Cliquez sur une carte pour explorer ses fonctionnalités.
+            Des applications complètes, en production. Cliquez sur une carte pour explorer son fonctionnement et ses fonctionnalités.
           </p>
         </div>
 
@@ -58,9 +58,9 @@ export default function AppsSection() {
                 <h3 className="mb-0.5 text-base font-semibold">{app.name}</h3>
                 <p className="mb-3 text-xs text-zinc-400">{app.tagline}</p>
 
-                {/* Mockup visuel — toujours visible */}
+                {/* Workflow diagram — remplace les mockups */}
                 <div className="mb-3" onClick={(e) => { e.stopPropagation(); setLightbox(app.id); }}>
-                  <AppMockup type={app.mockupType} data={app.mockupData} gradient={app.gradient} />
+                  <WorkflowDiagram type={app.id} gradient={app.gradient} />
                 </div>
 
                 {/* KPI badge */}
@@ -121,13 +121,14 @@ export default function AppsSection() {
                     </div>
                   </div>
 
-                  {/* Mockup large */}
+                  {/* Workflow large */}
                   <div className="mb-4 scale-110 origin-top">
-                    <AppMockup type={app.mockupType} data={app.mockupData} gradient={app.gradient} />
+                    <WorkflowDiagram type={app.id} gradient={app.gradient} />
                   </div>
 
                   <p className="mb-4 text-sm text-zinc-300">{app.description}</p>
 
+                  <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-violet-400">Fonctionnalités</h4>
                   <ul className="space-y-2">
                     {app.features.map((f) => (
                       <li key={f} className="flex items-start gap-2 text-sm text-zinc-400">

@@ -16,11 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'ProductivAI — Applications sur-mesure pour PME',
   description:
-    'Nous concevons des applications sur-mesure, des systèmes d\'automatisation IA et des plateformes digitales qui donnent aux PME les moyens de piloter, d\'optimiser et de grandir.',
+    'Applications sur-mesure, automatisation IA et plateformes digitales pour PME. ERP, CRM, médiathèque, CRM commercial multi-sites.',
   openGraph: {
     title: 'ProductivAI — Applications sur-mesure pour PME',
     description:
-      'Des applications qui transforment les données en décisions. ERP, CRM, médiathèque, automatisation IA.',
+      'Des applications qui transforment les données en décisions.',
     type: 'website',
   },
 };

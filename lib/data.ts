@@ -8,9 +8,6 @@ export interface App {
   features: string[];
   kpiLabel: string;
   gradient: string;
-  // Données pour le mockup visuel
-  mockupType: 'erp' | 'crm' | 'media' | 'proximite';
-  mockupData: Record<string, number | string>;
 }
 
 export const apps: App[] = [
@@ -30,8 +27,6 @@ export const apps: App[] = [
     ],
     kpiLabel: '+40% productivité commerciale',
     gradient: 'from-violet-600 to-indigo-600',
-    mockupType: 'erp',
-    mockupData: { ca: 245800, pipeline: 12, conversion: 67, factures: 48 },
   },
   {
     id: 'crm',
@@ -49,8 +44,6 @@ export const apps: App[] = [
     ],
     kpiLabel: '-60% temps administratif',
     gradient: 'from-emerald-500 to-teal-600',
-    mockupType: 'crm',
-    mockupData: { membres: 342, presences: 78, integration: 24, evenements: 12 },
   },
   {
     id: 'media',
@@ -68,8 +61,6 @@ export const apps: App[] = [
     ],
     kpiLabel: '×3 engagement audience',
     gradient: 'from-rose-500 to-orange-500',
-    mockupType: 'media',
-    mockupData: { vues: 12580, partages: 3420, contenus: 156, stockage: 28 },
   },
   {
     id: 'proximite',
@@ -87,8 +78,6 @@ export const apps: App[] = [
     ],
     kpiLabel: '+55% taux de closing',
     gradient: 'from-cyan-500 to-blue-600',
-    mockupType: 'proximite',
-    mockupData: { fiches: 89, closing: 55, agences: 6, caMensuel: 234000 },
   },
 ];
 

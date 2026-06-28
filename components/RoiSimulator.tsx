@@ -1,16 +1,45 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { calculateRoi, sectors, type Sector } from '@/lib/data';
+import { calculateRoi, sectors } from '@/lib/data';
 import { cn } from '@/lib/utils';
 
 interface Props {
   sectorId: string;
 }
 
+// ─── Explications concrètes par secteur ───
+const caseStudies: Record<string, { scenario: string; detail: string }> = {
+  commerce: {
+    scenario: 'Un réseau de 8 vendeurs réalisant 120 ventes/mois',
+    detail: 'Chaque vendeur passe ~6h/semaine à ressaisir des commandes dans Excel, éditer des factures manuellement et réconcilier les paiements. Notre ERP automatise tout le cycle devis-facture-paiement, libérant ces heures pour la vente terrain.',
+  },
+  services: {
+    scenario: 'Un cabinet de 5 consultants gérant 15 projets/mois',
+    detail: 'Chaque consultant perd ~5h/semaine en facturation manuelle, relances clients et suivi de temps. Notre CRM projet automatisé transforme les devis en factures en un clic et suit la rentabilité par mission en temps réel.',
+  },
+  immobilier: {
+    scenario: 'Un réseau de 6 négociateurs signant 20 mandats/mois',
+    detail: 'Chaque négociateur passe ~7h/semaine à gérer les fiches papier, les relances et la coordination des visites. Notre CRM multi-sites digitalise tout le workflow du mandat à l\'acte authentique.',
+  },
+  association: {
+    scenario: 'Une association de 15 bénévoles suivant 200 membres',
+    detail: 'Chaque responsable perd ~8h/semaine en tableaux Excel, pointages manuels et relances individuelles. Notre CRM communautaire automatise le suivi des présences et détecte les membres en décrochage avant qu\'ils ne partent.',
+  },
+  creation: {
+    scenario: 'Un studio de 4 créatifs livrant 8 projets/mois',
+    detail: 'Chaque créatif perd ~6h/semaine en allers-retours de validation, fichiers éparpillés et réunions de coordination. Notre plateforme centralise briefs, validations et livrables avec traçabilité complète.',
+  },
+  renovation: {
+    scenario: 'Un réseau de 10 commerciaux réalisant 80 visites/mois',
+    detail: 'Chaque commercial passe ~7h/semaine en paperasse administrative : fiches de visite papier, devis manuscrits, photos à trier. Notre solution digitalise toute la chaîne de qualification à la signature.',
+  },
+};
+
 export default function RoiSimulator({ sectorId }: Props) {
   const sector = sectors.find((s) => s.id === sectorId) || sectors[0];
   const cfg = sector.roi;
+  const cs = caseStudies[sectorId] || caseStudies['commerce'];
 
   const [m1, setM1] = useState(cfg.default1);
   const [m2, setM2] = useState(cfg.default2);
@@ -41,7 +70,7 @@ export default function RoiSimulator({ sectorId }: Props) {
       if (progress < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
-  }, [roi.annualGain]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [roi.annualGain]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,14 +94,33 @@ export default function RoiSimulator({ sectorId }: Props) {
         {/* Header */}
         <div className={cn('mb-12 text-center transition-all duration-700', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
-            Votre simulateur <span className="gradient-text">{sector.name}</span>
+            Simulateur <span className="gradient-text">{sector.name}</span>
           </h2>
           <p className="mx-auto max-w-xl text-zinc-400">
-            {sector.icon} Paramètres adaptés à votre secteur. Ajustez les curseurs selon votre situation.
+            Ajustez les curseurs selon votre situation pour estimer votre gain.
           </p>
         </div>
 
-        {/* Card */}
+        {/* ─── CASE STUDY ─── */}
+        <div
+          key={sectorId + '-case'}
+          className={cn(
+            'mb-6 rounded-xl border border-violet-500/20 bg-violet-500/5 p-5 transition-all duration-700',
+            show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          )}
+        >
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 shrink-0 text-lg">{sector.icon}</span>
+            <div>
+              <p className="mb-1 text-sm font-medium text-violet-200">
+                Cas concret : {cs.scenario}
+              </p>
+              <p className="text-xs leading-relaxed text-zinc-400">{cs.detail}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── SIMULATOR ─── */}
         <div className={cn('rounded-2xl border border-zinc-800 bg-card p-8 transition-all duration-700 sm:p-10', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           <div className="grid gap-8 lg:grid-cols-5">
             {/* Controls */}
@@ -110,7 +158,7 @@ export default function RoiSimulator({ sectorId }: Props) {
                 </div>
               )}
 
-              <p className="mt-3 text-[10px] text-zinc-600 italic">{roi.description}</p>
+              <p className="mt-3 text-[10px] text-zinc-600 italic leading-tight text-center">{roi.description}</p>
             </div>
           </div>
         </div>
@@ -132,7 +180,7 @@ export default function RoiSimulator({ sectorId }: Props) {
   );
 }
 
-// ─── Slider sub-component ───
+// ─── Slider ───
 function Slider({ label, min, max, step, value, onChange }: {
   label: string; min: number; max: number; step?: number; value: number; onChange: (v: number) => void;
 }) {
