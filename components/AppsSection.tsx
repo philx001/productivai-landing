@@ -37,8 +37,8 @@ export default function AppsSection() {
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Cards — 2×2 pour laisser de la place aux workflows */}
+        <div className="grid gap-6 sm:grid-cols-2">
           {apps.map((app, index) => {
             const isOpen = expanded === app.id;
             return (
