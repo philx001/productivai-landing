@@ -7,7 +7,6 @@ import WorkflowDiagram from './WorkflowDiagram';
 
 export default function AppsSection() {
   const [expanded, setExpanded] = useState<string | null>(null);
-  const [lightbox, setLightbox] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -33,11 +32,11 @@ export default function AppsSection() {
             Nos <span className="gradient-text">réalisations</span>
           </h2>
           <p className="mx-auto max-w-2xl text-zinc-400">
-            Des applications complètes, en production. Cliquez sur une carte pour explorer son fonctionnement et ses fonctionnalités.
+            Des applications complètes, en production. Cliquez sur une carte pour explorer ses fonctionnalités.
           </p>
         </div>
 
-        {/* Cards — 2×2 pour laisser de la place aux workflows */}
+        {/* Cards — 2×2 */}
         <div className="grid gap-6 sm:grid-cols-2">
           {apps.map((app, index) => {
             const isOpen = expanded === app.id;
@@ -58,15 +57,20 @@ export default function AppsSection() {
                 <h3 className="mb-0.5 text-base font-semibold">{app.name}</h3>
                 <p className="mb-3 text-xs text-zinc-400">{app.tagline}</p>
 
-                {/* Workflow diagram — remplace les mockups */}
-                <div className="mb-3" onClick={(e) => { e.stopPropagation(); setLightbox(app.id); }}>
+                {/* Workflow diagram */}
+                <div className="mb-3 pointer-events-none">
                   <WorkflowDiagram type={app.id} gradient={app.gradient} />
                 </div>
 
-                {/* KPI badge */}
-                <span className="inline-block rounded-full bg-violet-500/10 px-2.5 py-0.5 text-[10px] font-medium text-violet-300">
-                  {app.kpiLabel}
-                </span>
+                {/* KPI badge + description courte */}
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="inline-block rounded-full bg-violet-500/10 px-2.5 py-0.5 text-[10px] font-medium text-violet-300">
+                    {app.kpiLabel}
+                  </span>
+                </div>
+
+                {/* Brève description */}
+                <p className="text-[11px] text-zinc-500 leading-relaxed">{app.description}</p>
 
                 {/* Expandable features */}
                 <div className={cn('overflow-hidden transition-all duration-500', isOpen ? 'mt-3 max-h-96 opacity-100' : 'max-h-0 opacity-0')}>
@@ -86,63 +90,6 @@ export default function AppsSection() {
           })}
         </div>
       </div>
-
-      {/* ─── Lightbox ─── */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <div
-            className="relative w-full max-w-lg rounded-2xl border border-zinc-700 bg-card p-8 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {(() => {
-              const app = apps.find((a) => a.id === lightbox);
-              if (!app) return null;
-              return (
-                <>
-                  <button
-                    onClick={() => setLightbox(null)}
-                    className="absolute right-4 top-4 text-zinc-500 transition-colors hover:text-white"
-                  >
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-
-                  <div className="mb-4 flex items-center gap-3">
-                    <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br text-lg shadow-lg', app.gradient)}>
-                      {app.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold">{app.name}</h3>
-                      <p className="text-sm text-zinc-400">{app.tagline}</p>
-                    </div>
-                  </div>
-
-                  {/* Workflow large */}
-                  <div className="mb-4 scale-110 origin-top">
-                    <WorkflowDiagram type={app.id} gradient={app.gradient} />
-                  </div>
-
-                  <p className="mb-4 text-sm text-zinc-300">{app.description}</p>
-
-                  <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-violet-400">Fonctionnalités</h4>
-                  <ul className="space-y-2">
-                    {app.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-zinc-400">
-                        <span className="mt-0.5 shrink-0 text-violet-400">✦</span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              );
-            })()}
-          </div>
-        </div>
-      )}
     </section>
   );
 }
