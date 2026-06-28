@@ -259,6 +259,107 @@ export const sectors: Sector[] = [
       impactMessage: 'Un commercial supplémentaire déployable sur le terrain',
     },
   },
+  // ─── Nouveaux secteurs (ligne 2) ───
+  {
+    id: 'rh',
+    name: 'RH & Recrutement',
+    icon: '👔',
+    description: 'Gestion des offres d\'emploi, suivi des candidatures, pipeline d\'intégration et pilotage des recrutements.',
+    benefits: [
+      'Automatisation du tri des CV et des relances',
+      'Pipeline de recrutement clair par poste',
+      'Onboarding structuré : offre → intégration',
+      'Tableau de bord RH : délais, coûts, sources',
+    ],
+    appMapping: ['crm', 'erp'],
+    roi: {
+      label1: 'Recruteurs / RH dans votre équipe',
+      label2: 'Candidatures reçues par mois',
+      label3: 'Heures de tri/relance gagnées / recruteur / semaine',
+      default1: 3, default2: 50, default3: 8,
+      max1: 50, max2: 500, max3: 20,
+      step2: 5,
+      unit: '€ d\'économie sur le processus de recrutement',
+      resultLabel: 'Gain de productivité RH annuel estimé',
+      impactThreshold: 40000,
+      impactMessage: 'Un recruteur supplémentaire financé chaque année',
+    },
+  },
+  {
+    id: 'juridique',
+    name: 'Juridique & Conformité',
+    icon: '⚖️',
+    description: 'Gestion des dossiers clients, rédaction assistée, suivi des échéances et archivage documentaire.',
+    benefits: [
+      'Centralisation des dossiers et des documents',
+      'Suivi automatisé des échéances et délais',
+      'Rédaction structurée avec modèles réutilisables',
+      'Traçabilité complète des validations',
+    ],
+    appMapping: ['erp', 'media'],
+    roi: {
+      label1: 'Juristes dans votre cabinet',
+      label2: 'Dossiers / actes traités par mois',
+      label3: 'Heures de recherche documentaire gagnées / juriste / semaine',
+      default1: 3, default2: 15, default3: 7,
+      max1: 40, max2: 150, max3: 20,
+      step2: 1,
+      unit: '€ de temps facturable récupéré',
+      resultLabel: 'Gain de productivité juridique annuel estimé',
+      impactThreshold: 60000,
+      impactMessage: 'Un collaborateur supplémentaire sans augmenter la masse salariale',
+    },
+  },
+  {
+    id: 'social',
+    name: 'Réseaux Sociaux & Marketing',
+    icon: '📱',
+    description: 'Planning de contenu, publication multi-plateforme automatisée, analytics et reporting d\'engagement.',
+    benefits: [
+      'Planification et publication centralisées',
+      'Mesure d\'impact par publication et par canal',
+      'Reporting automatisé pour vos clients',
+      'Gain de temps sur la coordination éditoriale',
+    ],
+    appMapping: ['media'],
+    roi: {
+      label1: 'Community managers / Social media managers',
+      label2: 'Publications planifiées par mois',
+      label3: 'Heures de reporting gagnées / CM / semaine',
+      default1: 2, default2: 40, default3: 5,
+      max1: 30, max2: 300, max3: 20,
+      step2: 5,
+      unit: '€ de temps de production récupéré',
+      resultLabel: 'Gain de productivité éditoriale annuel estimé',
+      impactThreshold: 30000,
+      impactMessage: 'Un CDI créa / montage supplémentaire par an',
+    },
+  },
+  {
+    id: 'freelance',
+    name: 'Solo-entrepreneur & Freelance',
+    icon: '🚀',
+    description: 'Gestion clients, devis, facturation, relances et tableau de bord d\'activité pour indépendants et TPE.',
+    benefits: [
+      'Fini les templates de devis et factures à refaire',
+      'Relances clients automatiques par email',
+      'Visibilité sur votre CA et vos créances',
+      'Gain de temps administratif pour vous concentrer sur votre métier',
+    ],
+    appMapping: ['erp'],
+    roi: {
+      label1: 'Votre activité (en équivalent temps plein)',
+      label2: 'Clients / missions facturés par mois',
+      label3: 'Heures d\'admin gagnées par semaine',
+      default1: 1, default2: 8, default3: 6,
+      max1: 10, max2: 50, max3: 20,
+      step2: 1,
+      unit: '€ de temps libéré pour votre cœur de métier',
+      resultLabel: 'Valeur du temps administratif récupéré par an',
+      impactThreshold: 15000,
+      impactMessage: 'Un mois de salaire supplémentaire dégagé chaque année',
+    },
+  },
 ];
 
 // ─── ROI Calculator ───
@@ -283,11 +384,15 @@ export function calculateRoi(sectorId: string, params: RoiParams): RoiResult {
   // Taux horaire moyen selon le secteur
   const rates: Record<string, number> = {
     commerce: 42,
-    services: 65,  // TJM plus élevé pour consultants
+    services: 65,
     immobilier: 48,
     association: 28,
     creation: 55,
     renovation: 40,
+    rh: 38,
+    juridique: 60,
+    social: 35,
+    freelance: 50,
   };
   const hourlyRate = rates[sectorId] || 45;
 
@@ -315,6 +420,10 @@ export function calculateRoi(sectorId: string, params: RoiParams): RoiResult {
     association: `Soit ${Math.round(totalAnnual / 30000)} poste(s) de coordinateur`,
     creation: `Soit ${Math.round(totalAnnual / 55000)} CDI créatif supplémentaire`,
     renovation: `Soit ${Math.round(totalAnnual / 42000)} commercial(e)(s) terrain de plus`,
+    rh: `Soit ${Math.round(totalAnnual / 38000)} recruteur(s) temps partiel financé(s)`,
+    juridique: `Soit ${Math.round(totalAnnual / 60000)} juriste(s) freelance en soutien`,
+    social: `Soit ${Math.round(totalAnnual / 35000)} CDI community manager supplémentaire`,
+    freelance: `Soit ${Math.round(totalAnnual / 50000)} € de chiffre d'affaires additionnel`,
   };
   const description = descriptions[sectorId] || 'ROI estimé sur votre activité';
 

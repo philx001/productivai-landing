@@ -80,6 +80,11 @@ export default function CtaSection() {
             Zero engagement
           </span>
         </div>
+
+        {/* Notice: futur formulaire Notion */}
+        <div className="mt-6 text-[10px] text-zinc-700">
+          Formulaire de contact automatisé (Notion) à venir prochainement.
+        </div>
       </div>
 
       {/* Footer */}

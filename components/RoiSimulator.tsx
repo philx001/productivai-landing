@@ -8,7 +8,7 @@ interface Props {
   sectorId: string;
 }
 
-// ─── Explications concrètes par secteur ───
+// ─── Cas concrets par secteur ───
 const caseStudies: Record<string, { scenario: string; detail: string }> = {
   commerce: {
     scenario: 'Un réseau de 8 vendeurs réalisant 120 ventes/mois',
@@ -34,6 +34,22 @@ const caseStudies: Record<string, { scenario: string; detail: string }> = {
     scenario: 'Un réseau de 10 commerciaux réalisant 80 visites/mois',
     detail: 'Chaque commercial passe ~7h/semaine en paperasse administrative : fiches de visite papier, devis manuscrits, photos à trier. Notre solution digitalise toute la chaîne de qualification à la signature.',
   },
+  rh: {
+    scenario: 'Un pôle RH de 3 recruteurs traitant 50 candidatures/mois',
+    detail: 'Chaque recruteur passe ~8h/semaine à trier des CV, envoyer des relances manuelles et coordonner les entretiens. Notre outil automatise le sourcing, le suivi des candidatures et l\'intégration des nouveaux embauchés.',
+  },
+  juridique: {
+    scenario: 'Un cabinet de 3 juristes gérant 15 dossiers/mois',
+    detail: 'Chaque juriste perd ~7h/semaine en recherche documentaire, rédaction de templates et suivi des échéances. Notre plateforme centralise les dossiers, automatise la génération d\'actes et sécurise la traçabilité des validations.',
+  },
+  social: {
+    scenario: 'Une agence de 2 community managers planifiant 40 publications/mois',
+    detail: 'Chaque CM passe ~5h/semaine à compiler des rapports d\'engagement, exporter des statistiques et coordonner les publications entre clients et validateurs. Notre médiathèque centralise la création, le planning et les analytics.',
+  },
+  freelance: {
+    scenario: 'Un freelance facturant 8 clients par mois',
+    detail: 'Vous perdez ~6h/semaine en devis à refaire, factures à rédiger, relances à envoyer et comptabilité à tenir. Notre ERP simplifié automatise vos documents, vos rappels et vous donne une vue claire sur votre trésorerie.',
+  },
 };
 
 export default function RoiSimulator({ sectorId }: Props) {
@@ -50,7 +66,7 @@ export default function RoiSimulator({ sectorId }: Props) {
 
   const roi = calculateRoi(sectorId, { metric1: m1, metric2: m2, metric3: m3 });
 
-  // Reset defaults when sector changes
+  // Reset on sector change
   useEffect(() => {
     setM1(cfg.default1);
     setM2(cfg.default2);
@@ -86,6 +102,12 @@ export default function RoiSimulator({ sectorId }: Props) {
   const fmt = (n: number) => new Intl.NumberFormat('fr-FR').format(n);
   const show = scrolled;
 
+  // Détail du calcul
+  const calcSteps = [
+    `${m1} personne(s) × ${m3}h/sem × 52 semaines = ${m1 * m3 * 52}h économisées/an`,
+    `${m1 * m3 * 52}h × taux horaire secteur = ${fmt(roi.annualGain)} €`,
+  ];
+
   return (
     <section id="simulator" ref={sectionRef} className="relative px-6 py-24 sm:py-32">
       <div className="pointer-events-none absolute right-0 top-1/3 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-violet-600/5 blur-[120px]" />
@@ -97,11 +119,11 @@ export default function RoiSimulator({ sectorId }: Props) {
             Simulateur <span className="gradient-text">{sector.name}</span>
           </h2>
           <p className="mx-auto max-w-xl text-zinc-400">
-            Ajustez les curseurs selon votre situation pour estimer votre gain.
+            Ajustez les curseurs selon votre situation. Le gain se recalcule en temps réel.
           </p>
         </div>
 
-        {/* ─── CASE STUDY ─── */}
+        {/* ─── Case study ─── */}
         <div
           key={sectorId + '-case'}
           className={cn(
@@ -120,7 +142,7 @@ export default function RoiSimulator({ sectorId }: Props) {
           </div>
         </div>
 
-        {/* ─── SIMULATOR ─── */}
+        {/* ─── Simulator ─── */}
         <div className={cn('rounded-2xl border border-zinc-800 bg-card p-8 transition-all duration-700 sm:p-10', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           <div className="grid gap-8 lg:grid-cols-5">
             {/* Controls */}
@@ -137,7 +159,6 @@ export default function RoiSimulator({ sectorId }: Props) {
                 <span className="text-4xl font-bold gradient-text sm:text-5xl">{fmt(displayAnnual)}</span>
                 <span className="ml-1 text-xl text-zinc-400">€</span>
               </div>
-
               <p className="mb-4 text-center text-xs text-zinc-500">{cfg.unit}</p>
 
               <div className="grid w-full grid-cols-2 gap-3 text-center text-xs">
@@ -158,15 +179,36 @@ export default function RoiSimulator({ sectorId }: Props) {
                 </div>
               )}
 
-              <p className="mt-3 text-[10px] text-zinc-600 italic leading-tight text-center">{roi.description}</p>
+              <p className="mt-3 text-[10px] text-zinc-600 italic text-center">{roi.description}</p>
             </div>
+          </div>
+        </div>
+
+        {/* ─── Détail du calcul ─── */}
+        <div
+          key={sectorId + '-calc'}
+          className={cn(
+            'mt-4 rounded-xl border border-zinc-800 bg-black/30 p-4 transition-all duration-700',
+            show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          )}
+        >
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">Comment ce chiffre est calculé</p>
+          <div className="space-y-1">
+            {calcSteps.map((step, i) => (
+              <p key={i} className="text-xs text-zinc-400">
+                {i + 1}. {step}
+              </p>
+            ))}
+            <p className="mt-1 text-[10px] text-zinc-600">
+              * Le gain réel dépend du secteur, de votre organisation et des outils déjà en place. Ce simulateur donne un ordre de grandeur basé sur des moyennes constatées.
+            </p>
           </div>
         </div>
 
         {/* CTA */}
         <div className={cn('mt-8 text-center transition-all duration-700', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           <p className="mb-4 text-sm text-zinc-500">
-            Ces chiffres sont une estimation. Contactez-nous pour une analyse personnalisée de votre secteur.
+            Vous voulez un chiffrage précis pour votre activité ? Contactez-nous.
           </p>
           <a
             href="mailto:contact@productivai.fr"
