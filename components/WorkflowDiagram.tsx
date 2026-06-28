@@ -12,8 +12,8 @@ const workflows: Record<string, { title: string; steps: WorkflowStep[] }> = {
     title: 'Cycle commercial automatisé',
     steps: [
       { icon: '📝', label: 'Devis' },
-      { icon: '📋', label: 'Bon commande' },
-      { icon: '📦', label: 'Bon livraison' },
+      { icon: '📋', label: 'BC' },
+      { icon: '📦', label: 'BL' },
       { icon: '🧾', label: 'Facture' },
       { icon: '💶', label: 'Paiement' },
     ],
@@ -24,7 +24,7 @@ const workflows: Record<string, { title: string; steps: WorkflowStep[] }> = {
       { icon: '👋', label: 'Contact' },
       { icon: '📞', label: 'Suivi' },
       { icon: '🎓', label: 'Formation' },
-      { icon: '✅', label: 'Membre actif' },
+      { icon: '✅', label: 'Actif' },
     ],
   },
   media: {
@@ -32,7 +32,7 @@ const workflows: Record<string, { title: string; steps: WorkflowStep[] }> = {
     steps: [
       { icon: '📤', label: 'Import' },
       { icon: '🏷️', label: 'Catégorisation' },
-      { icon: '📱', label: 'Partage social' },
+      { icon: '📱', label: 'Partage' },
       { icon: '📊', label: 'Analytics' },
     ],
   },
@@ -45,7 +45,6 @@ const workflows: Record<string, { title: string; steps: WorkflowStep[] }> = {
       { icon: '✅', label: 'Validé' },
     ],
   },
-  // Nouveaux secteurs
   rh: {
     title: 'Processus de recrutement',
     steps: [
@@ -59,7 +58,7 @@ const workflows: Record<string, { title: string; steps: WorkflowStep[] }> = {
   juridique: {
     title: 'Gestion de dossiers',
     steps: [
-      { icon: '📁', label: 'Nouveau dossier' },
+      { icon: '📁', label: 'Dossier' },
       { icon: '✍️', label: 'Rédaction' },
       { icon: '👁️', label: 'Revue' },
       { icon: '✅', label: 'Validation' },
@@ -77,7 +76,7 @@ const workflows: Record<string, { title: string; steps: WorkflowStep[] }> = {
     ],
   },
   freelance: {
-    title: 'Cycle d\'activité',
+    title: "Cycle d'activité",
     steps: [
       { icon: '🤝', label: 'Prospect' },
       { icon: '📝', label: 'Devis' },
@@ -88,37 +87,58 @@ const workflows: Record<string, { title: string; steps: WorkflowStep[] }> = {
   },
 };
 
+const gradientMap: Record<string, string> = {
+  erp: 'from-violet-600 to-indigo-600',
+  crm: 'from-emerald-500 to-teal-600',
+  media: 'from-rose-500 to-orange-500',
+  proximite: 'from-cyan-500 to-blue-600',
+  rh: 'from-blue-500 to-indigo-600',
+  juridique: 'from-amber-500 to-orange-600',
+  social: 'from-pink-500 to-rose-600',
+  freelance: 'from-teal-500 to-emerald-600',
+};
+
 export default function WorkflowDiagram({ type, gradient }: { type: string; gradient: string }) {
   const wf = workflows[type];
   if (!wf) return null;
 
-  // Map type to gradient (fallback for new sectors)
-  const gradientMap: Record<string, string> = {
-    erp: 'from-violet-600 to-indigo-600',
-    crm: 'from-emerald-500 to-teal-600',
-    media: 'from-rose-500 to-orange-500',
-    proximite: 'from-cyan-500 to-blue-600',
-    rh: 'from-blue-500 to-indigo-600',
-    juridique: 'from-amber-500 to-orange-600',
-    social: 'from-pink-500 to-rose-600',
-    freelance: 'from-teal-500 to-emerald-600',
-  };
   const g = gradientMap[type] || gradient;
+  const has5 = wf.steps.length >= 5;
 
   return (
-    <div className="w-full rounded-lg border border-zinc-700/50 bg-black/40 p-3">
-      <span className="mb-2 block text-[9px] font-semibold uppercase tracking-wider text-zinc-500">{wf.title}</span>
-      <div className="flex items-center justify-between gap-0.5">
+    <div className="w-full rounded-xl border border-zinc-700/50 bg-black/40 p-4 sm:p-5">
+      <span className="mb-3 block text-xs font-semibold uppercase tracking-wider text-zinc-500 sm:text-sm">
+        {wf.title}
+      </span>
+      <div className="flex items-center justify-between gap-1 sm:gap-2">
         {wf.steps.map((step, i) => (
-          <div key={step.label} className="flex items-center gap-0.5">
-            <div className="flex flex-col items-center gap-0.5">
-              <div className={cn('flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br text-xs shadow-sm', g)}>
+          <div key={step.label} className="flex items-center gap-1 sm:gap-2">
+            {/* Step circle */}
+            <div className="flex flex-col items-center gap-1.5">
+              <div
+                className={cn(
+                  'flex items-center justify-center rounded-full shadow-md',
+                  has5 ? 'h-9 w-9 sm:h-12 sm:w-12 text-sm sm:text-lg' : 'h-10 w-10 sm:h-14 sm:w-14 text-base sm:text-xl',
+                  g
+                )}
+              >
                 {step.icon}
               </div>
-              <span className="text-[7px] text-zinc-500 text-center leading-tight max-w-[3rem]">{step.label}</span>
+              <span className={cn(
+                'text-center font-medium text-zinc-400 leading-tight',
+                has5 ? 'text-[9px] sm:text-xs max-w-[3.5rem] sm:max-w-[5rem]' : 'text-[10px] sm:text-xs max-w-[4rem] sm:max-w-[5rem]'
+              )}>
+                {step.label}
+              </span>
             </div>
+            {/* Arrow */}
             {i < wf.steps.length - 1 && (
-              <span className="text-zinc-700 text-xs mt-[-0.5rem]">→</span>
+              <span className={cn(
+                'text-zinc-700 shrink-0',
+                has5 ? 'text-sm sm:text-xl' : 'text-base sm:text-2xl'
+              )}>
+                →
+              </span>
             )}
           </div>
         ))}

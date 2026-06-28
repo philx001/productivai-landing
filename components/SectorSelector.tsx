@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { sectors, apps } from '@/lib/data';
+import { sectors } from '@/lib/data';
 import { cn } from '@/lib/utils';
 import WorkflowDiagram from './WorkflowDiagram';
 
@@ -10,7 +10,21 @@ interface Props {
   onSectorChange: (id: string) => void;
 }
 
-const ROW1_COUNT = 6; // premiers secteurs = ligne 1
+// Quels workflows afficher pour chaque secteur
+const sectorWorkflows: Record<string, string[]> = {
+  commerce: ['erp', 'proximite'],
+  services: ['erp'],
+  immobilier: ['proximite'],
+  association: ['crm'],
+  creation: ['proximite'],
+  renovation: ['proximite'],
+  rh: ['rh'],
+  juridique: ['juridique'],
+  social: ['social', 'media'],
+  freelance: ['freelance'],
+};
+
+const ROW1_COUNT = 6;
 
 export default function SectorSelector({ activeSector, onSectorChange }: Props) {
   const [scrolled, setScrolled] = useState(false);
@@ -30,15 +44,8 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
   const current = sectors.find((s) => s.id === activeSector)!;
   const row1 = sectors.slice(0, ROW1_COUNT);
   const row2 = sectors.slice(ROW1_COUNT);
+  const workflows = sectorWorkflows[activeSector] || [activeSector];
   const show = scrolled;
-
-  // Map appId to gradient for workflow display
-  const gradientMap: Record<string, string> = {
-    erp: 'from-violet-600 to-indigo-600',
-    crm: 'from-emerald-500 to-teal-600',
-    media: 'from-rose-500 to-orange-500',
-    proximite: 'from-cyan-500 to-blue-600',
-  };
 
   return (
     <section id="sectors" ref={sectionRef} className="relative px-6 py-24 sm:py-32">
@@ -51,11 +58,11 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
             Adapté à <span className="gradient-text">votre secteur</span>
           </h2>
           <p className="mx-auto max-w-2xl text-zinc-400">
-            Chaque métier a ses contraintes. Nos solutions s&apos;y adaptent. Cliquez sur votre secteur pour voir le workflow associé, puis estimez votre gain.
+            Cliquez sur votre secteur pour voir les automatisations possibles, puis estimez votre gain avec le simulateur.
           </p>
         </div>
 
-        {/* Row 1 */}
+        {/* Ligne 1 */}
         <div className={cn('mb-3 flex flex-wrap justify-center gap-2 transition-all duration-700', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           {row1.map((s) => (
             <button
@@ -74,7 +81,7 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
           ))}
         </div>
 
-        {/* Row 2 — nouveaux secteurs */}
+        {/* Ligne 2 */}
         <div className={cn('mb-10 flex flex-wrap justify-center gap-2 transition-all duration-700', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           {row2.map((s) => (
             <button
@@ -93,58 +100,40 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
           ))}
         </div>
 
-        {/* Content panel — agrandi */}
+        {/* Panneau secteur — agrandi */}
         <div
           key={activeSector}
           className={cn(
-            'rounded-2xl border border-zinc-800 bg-card p-8 transition-all duration-500 sm:p-12',
+            'rounded-2xl border border-zinc-800 bg-card p-6 transition-all duration-500 sm:p-12',
             show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           )}
         >
-          <div className="grid gap-10 lg:grid-cols-2">
-            {/* Left: description + benefits */}
+          <div className="grid gap-10">
+            {/* Haut : icône + description + bénéfices */}
             <div>
-              <h3 className="mb-3 text-2xl font-semibold">{current.icon} {current.name}</h3>
-              <p className="mb-6 text-zinc-400">{current.description}</p>
-              <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-violet-400">Bénéfices concrets</h4>
-              <ul className="space-y-3">
+              <h3 className="mb-3 text-xl font-semibold sm:text-2xl">{current.icon} {current.name}</h3>
+              <p className="mb-6 text-sm text-zinc-400 sm:text-base">{current.description}</p>
+              <div className="grid gap-3 sm:grid-cols-2">
                 {current.benefits.map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-sm text-zinc-300">
+                  <div key={b} className="flex items-start gap-3 text-sm text-zinc-300">
                     <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-xs text-violet-400">✓</span>
                     {b}
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
 
-            {/* Right: workflow + apps associées */}
+            {/* Bas : workflows possibles */}
             <div>
-              <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-cyan-400">Fonctionnement</h4>
-              {/* Workflow large */}
-              <div className="mb-6 scale-110 origin-top-left">
-                <WorkflowDiagram type={activeSector} gradient="from-violet-600 to-indigo-600" />
-              </div>
-
-              <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-cyan-400">Applications associées</h4>
-              <div className="space-y-3">
-                {current.appMapping.map((appId) => {
-                  const app = apps.find((a) => a.id === appId);
-                  if (!app) return null;
-                  return (
-                    <div
-                      key={app.id}
-                      className="flex items-center gap-4 rounded-xl border border-zinc-800 bg-black/40 p-4"
-                    >
-                      <div className={cn('flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br text-lg', gradientMap[app.id] || app.gradient)}>
-                        {app.icon}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium">{app.name}</p>
-                        <p className="text-xs text-zinc-500">{app.tagline}</p>
-                      </div>
-                    </div>
-                  );
-                })}
+              <h4 className="mb-5 text-sm font-semibold uppercase tracking-wider text-cyan-400">
+                Automatisations possibles dans ce secteur
+              </h4>
+              <div className={cn('grid gap-6', workflows.length > 1 ? 'sm:grid-cols-2' : 'sm:grid-cols-1')}>
+                {workflows.map((wf) => (
+                  <div key={wf} className="scale-100 origin-top">
+                    <WorkflowDiagram type={wf} gradient="from-violet-600 to-indigo-600" />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
