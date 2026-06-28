@@ -3,19 +3,18 @@
 import { useState, useRef, useEffect } from 'react';
 import { apps } from '@/lib/data';
 import { cn } from '@/lib/utils';
+import AppMockup from './AppMockup';
 
 export default function AppsSection() {
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setScrolled(true);
-          observer.disconnect();
-        }
+        if (entry.isIntersecting) { setScrolled(true); observer.disconnect(); }
       },
       { threshold: 0.1 }
     );
@@ -28,89 +27,121 @@ export default function AppsSection() {
   return (
     <section id="apps" ref={sectionRef} className="relative px-6 py-24 sm:py-32">
       <div className="mx-auto max-w-6xl">
-        {/* Section header */}
-        <div
-          className={cn(
-            'mb-16 text-center transition-all duration-700',
-            show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          )}
-        >
+        {/* Header */}
+        <div className={cn('mb-16 text-center transition-all duration-700', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
-            Nos <span className="gradient-text">realisations</span>
+            Nos <span className="gradient-text">réalisations</span>
           </h2>
           <p className="mx-auto max-w-2xl text-zinc-400">
-            Des applications completes, en production, qui prouvent notre capacite a livrer
-            des solutions robustes et performantes.
+            Des applications complètes, en production. Cliquez sur une carte pour explorer ses fonctionnalités.
           </p>
         </div>
 
-        {/* Apps grid */}
+        {/* Cards */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {apps.map((app, index) => (
-            <div
-              key={app.id}
-              className={cn(
-                'card-hover gradient-border group relative cursor-pointer rounded-2xl bg-card p-6 transition-all duration-500',
-                show
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-12 opacity-0'
-              )}
-              style={{ transitionDelay: `${index * 100}ms` }}
-              onClick={() => setExpanded(expanded === app.id ? null : app.id)}
-            >
-              {/* Icon */}
+          {apps.map((app, index) => {
+            const isOpen = expanded === app.id;
+            return (
               <div
+                key={app.id}
                 className={cn(
-                  'mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br text-xl shadow-lg',
-                  app.gradient
+                  'card-hover gradient-border group relative cursor-pointer rounded-2xl bg-card p-5 transition-all duration-500',
+                  show ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
                 )}
+                style={{ transitionDelay: `${index * 100}ms` }}
+                onClick={() => setExpanded(isOpen ? null : app.id)}
               >
-                {app.icon}
+                {/* Icon + title */}
+                <div className={cn('mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br text-lg shadow-lg', app.gradient)}>
+                  {app.icon}
+                </div>
+                <h3 className="mb-0.5 text-base font-semibold">{app.name}</h3>
+                <p className="mb-3 text-xs text-zinc-400">{app.tagline}</p>
+
+                {/* Mockup visuel — toujours visible */}
+                <div className="mb-3" onClick={(e) => { e.stopPropagation(); setLightbox(app.id); }}>
+                  <AppMockup type={app.mockupType} data={app.mockupData} gradient={app.gradient} />
+                </div>
+
+                {/* KPI badge */}
+                <span className="inline-block rounded-full bg-violet-500/10 px-2.5 py-0.5 text-[10px] font-medium text-violet-300">
+                  {app.kpiLabel}
+                </span>
+
+                {/* Expandable features */}
+                <div className={cn('overflow-hidden transition-all duration-500', isOpen ? 'mt-3 max-h-96 opacity-100' : 'max-h-0 opacity-0')}>
+                  <ul className="space-y-1.5 border-t border-zinc-800 pt-3">
+                    {app.features.map((f) => (
+                      <li key={f} className="flex items-start gap-1.5 text-[11px] text-zinc-300">
+                        <span className="mt-0.5 shrink-0 text-violet-400">✦</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {!isOpen && <p className="mt-2 text-[10px] text-zinc-600">Cliquez pour voir les fonctionnalités</p>}
               </div>
-
-              {/* Title */}
-              <h3 className="mb-1 text-lg font-semibold">{app.name}</h3>
-              <p className="mb-3 text-sm text-zinc-400">{app.tagline}</p>
-
-              {/* KPI badge */}
-              <span className="inline-block rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-300">
-                {app.kpiLabel}
-              </span>
-
-              {/* Features (expandable) */}
-              <div
-                className={cn(
-                  'overflow-hidden transition-all duration-500',
-                  expanded === app.id ? 'mt-4 max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                )}
-              >
-                <ul className="space-y-2 border-t border-zinc-800 pt-4">
-                  {app.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-zinc-300">
-                      <span className="mt-0.5 shrink-0 text-violet-400">&diams;</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href={app.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Voir la demo &rarr;
-                </a>
-              </div>
-
-              {/* Expand hint */}
-              {expanded !== app.id && (
-                <p className="mt-3 text-xs text-zinc-600">Cliquez pour voir les fonctionnalites</p>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
+
+      {/* ─── Lightbox ─── */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setLightbox(null)}
+        >
+          <div
+            className="relative w-full max-w-lg rounded-2xl border border-zinc-700 bg-card p-8 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {(() => {
+              const app = apps.find((a) => a.id === lightbox);
+              if (!app) return null;
+              return (
+                <>
+                  <button
+                    onClick={() => setLightbox(null)}
+                    className="absolute right-4 top-4 text-zinc-500 transition-colors hover:text-white"
+                  >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br text-lg shadow-lg', app.gradient)}>
+                      {app.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold">{app.name}</h3>
+                      <p className="text-sm text-zinc-400">{app.tagline}</p>
+                    </div>
+                  </div>
+
+                  {/* Mockup large */}
+                  <div className="mb-4 scale-110 origin-top">
+                    <AppMockup type={app.mockupType} data={app.mockupData} gradient={app.gradient} />
+                  </div>
+
+                  <p className="mb-4 text-sm text-zinc-300">{app.description}</p>
+
+                  <ul className="space-y-2">
+                    {app.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-sm text-zinc-400">
+                        <span className="mt-0.5 shrink-0 text-violet-400">✦</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
