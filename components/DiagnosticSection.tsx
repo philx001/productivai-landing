@@ -97,7 +97,7 @@ export default function DiagnosticSection() {
   const show = scrolled;
 
   return (
-    <section ref={sectionRef} className="relative px-6 py-24 sm:py-32">
+    <section ref={sectionRef} className="relative px-6 py-16 sm:py-20">
       <div className="pointer-events-none absolute right-0 top-1/3 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-violet-600/5 blur-[120px]" />
 
       <div className="relative mx-auto max-w-3xl">

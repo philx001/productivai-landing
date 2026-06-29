@@ -47,7 +47,7 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
   const show = scrolled;
 
   return (
-    <section id="sectors" className="relative px-6 py-24 sm:py-32">
+    <section id="sectors" className="relative px-6 py-16 sm:py-20">
       <div className="pointer-events-none absolute left-1/3 top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-cyan-500/5 blur-[100px]" />
 
       <div className="relative mx-auto max-w-6xl">

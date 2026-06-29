@@ -53,6 +53,13 @@
   --benefit-text: #c4b5fd;
   --header-bg: rgba(0,0,0,0.6);
   --header-border: rgba(255,255,255,0.08);
+  --before-heading: #f87171;
+  --before-text: rgba(252,165,165,0.7);
+  --before-text-active: #fca5a5;
+  --after-heading: #34d399;
+  --after-text: rgba(110,231,183,0.8);
+  --after-text-active: #6ee7b7;
+  --badge-case: #c4b5fd;
 }
 
 /* ─── Thème clair ─── */
@@ -86,6 +93,13 @@ html.light {
   --benefit-text: #6d28d9;
   --header-bg: rgba(255,255,255,0.85);
   --header-border: rgba(0,0,0,0.08);
+  --before-heading: #dc2626;
+  --before-text: #991b1b;
+  --before-text-active: #b91c1c;
+  --after-heading: #059669;
+  --after-text: #065f46;
+  --after-text-active: #047857;
+  --badge-case: #6d28d9;
 }
 html.light .gradient-text {
   background: linear-gradient(135deg, #7c3aed, #0891b2);
@@ -152,6 +166,13 @@ html.light ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 .border-header { border-color: var(--header-border); }
 .bg-label { background: var(--label-bg); }
 .border-label { border-color: var(--label-border); }
+.text-before-heading { color: var(--before-heading); }
+.text-before-text { color: var(--before-text); }
+.text-before-text-active { color: var(--before-text-active); }
+.text-after-heading { color: var(--after-heading); }
+.text-after-text { color: var(--after-text); }
+.text-after-text-active { color: var(--after-text-active); }
+.text-badge-case { color: var(--badge-case); }
 
 .gradient-text {
   background: linear-gradient(135deg, #c084fc, #22d3ee);

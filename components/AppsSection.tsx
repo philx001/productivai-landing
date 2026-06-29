@@ -24,7 +24,7 @@ export default function AppsSection() {
   const show = scrolled;
 
   return (
-    <section id="apps" ref={sectionRef} className="relative px-6 py-24 sm:py-32">
+    <section id="apps" ref={sectionRef} className="relative px-6 py-16 sm:py-20">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className={cn('mb-16 text-center transition-all duration-700', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
@@ -84,7 +84,7 @@ export default function AppsSection() {
                   </ul>
                 </div>
 
-                {!isOpen && <p className="mt-2 text-[10px] text-kpi-label">Cliquez pour voir les fonctionnalités</p>}
+                {!isOpen && <p className="mt-3 flex items-center gap-1.5 text-xs font-medium text-muted-strong transition-all hover:text-violet-400">Cliquez pour voir les fonctionnalités <span className="inline-block transition-transform group-hover:translate-x-0.5">→</span></p>}
               </div>
             );
           })}

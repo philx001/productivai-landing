@@ -109,7 +109,7 @@ export default function RoiSimulator({ sectorId }: Props) {
   ];
 
   return (
-    <section id="simulator" ref={sectionRef} className="relative px-6 py-24 sm:py-32">
+    <section id="simulator" ref={sectionRef} className="relative px-6 py-16 sm:py-20">
       <div className="pointer-events-none absolute right-0 top-1/3 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-violet-600/5 blur-[120px]" />
 
       <div className="relative mx-auto max-w-4xl">
@@ -134,7 +134,7 @@ export default function RoiSimulator({ sectorId }: Props) {
           <div className="flex items-start gap-3">
             <span className="mt-0.5 shrink-0 text-lg">{sector.icon}</span>
             <div>
-              <p className="mb-1 text-sm font-medium text-violet-200">
+              <p className="mb-1 text-sm font-medium text-badge-case">
                 Cas concret : {cs.scenario}
               </p>
               <p className="text-xs leading-relaxed text-muted">{cs.detail}</p>
@@ -164,7 +164,7 @@ export default function RoiSimulator({ sectorId }: Props) {
               <div className="grid w-full grid-cols-2 gap-3 text-center text-xs">
                 <div className="rounded-lg bg-label p-3">
                   <p className="text-muted">Par mois</p>
-                  <p className="text-base font-semibold text-white">{fmt(roi.monthlyGain)} €</p>
+                  <p className="text-base font-semibold text-fg">{fmt(roi.monthlyGain)} €</p>
                 </div>
                 <div className="rounded-lg bg-label p-3">
                   <p className="text-muted">Gain productivité</p>
@@ -230,7 +230,7 @@ function Slider({ label, min, max, step, value, onChange }: {
     <div>
       <div className="mb-2 flex items-center justify-between">
         <label className="text-sm font-medium text-muted-strong">{label}</label>
-        <span className="text-lg font-bold text-white">{value}</span>
+        <span className="text-lg font-bold text-fg">{value}</span>
       </div>
       <input
         type="range"

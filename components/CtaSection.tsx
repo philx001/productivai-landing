@@ -25,7 +25,7 @@ export default function CtaSection() {
     <section
       id="cta"
       ref={sectionRef}
-      className="relative overflow-hidden px-6 py-24 sm:py-32"
+      className="relative overflow-hidden px-6 py-16 sm:py-20"
     >
       {/* Background */}
       <div className="pointer-events-none absolute inset-0">
