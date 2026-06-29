@@ -59,7 +59,7 @@ export default function CtaSection() {
           </a>
           <a
             href="mailto:contact@productivai.fr"
-            className="rounded-full border border-label px-10 py-4 text-base font-medium text-zinc-300 transition-all hover:border-zinc-500 hover:text-white"
+            className="rounded-full border border-label px-10 py-4 text-base font-medium text-muted transition-all hover:border-muted hover:text-fg"
           >
             contact@productivai.fr
           </a>

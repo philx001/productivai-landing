@@ -229,7 +229,7 @@ function Slider({ label, min, max, step, value, onChange }: {
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
-        <label className="text-sm font-medium text-zinc-300">{label}</label>
+        <label className="text-sm font-medium text-muted-strong">{label}</label>
         <span className="text-lg font-bold text-white">{value}</span>
       </div>
       <input

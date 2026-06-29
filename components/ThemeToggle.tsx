@@ -23,7 +23,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="flex h-8 w-8 items-center justify-center rounded-full text-sm text-zinc-500 transition-colors hover:bg-zinc-800 hover:text-white"
+      className="flex h-8 w-8 items-center justify-center rounded-full text-sm text-muted transition-colors hover:bg-zinc-800 hover:text-white"
       title={light ? 'Mode sombre' : 'Mode clair'}
     >
       {light ? (

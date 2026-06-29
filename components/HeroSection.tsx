@@ -42,7 +42,7 @@ export default function HeroSection() {
         )}
       >
         {/* Badge */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-4 py-1.5 text-xs text-violet-300">
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-4 py-1.5 text-xs text-benefit">
           <span className="h-2 w-2 rounded-full bg-violet-400 animate-pulse" />
           Créateur d&apos;applications sur-mesure pour TPE & PME
         </div>
@@ -78,7 +78,7 @@ export default function HeroSection() {
           </button>
           <button
             onClick={() => scrollTo('simulator')}
-            className="rounded-full border border-zinc-700 px-8 py-3.5 text-base font-medium text-zinc-300 transition-all hover:border-zinc-500 hover:text-white"
+            className="rounded-full border border-label px-8 py-3.5 text-base font-medium text-muted transition-all hover:border-muted hover:text-fg"
           >
             Estimer mon gain →
           </button>
@@ -87,7 +87,7 @@ export default function HeroSection() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <svg className="h-6 w-6 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="h-6 w-6 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       </div>
