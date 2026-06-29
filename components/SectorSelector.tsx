@@ -10,7 +10,6 @@ interface Props {
   onSectorChange: (id: string) => void;
 }
 
-// Quels workflows afficher pour chaque secteur
 const sectorWorkflows: Record<string, string[]> = {
   commerce: ['erp', 'proximite'],
   services: ['erp'],
@@ -48,17 +47,16 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
   const show = scrolled;
 
   return (
-    <section id="sectors" ref={sectionRef} className="relative px-6 py-24 sm:py-32">
+    <section id="sectors" className="relative px-6 py-24 sm:py-32">
       <div className="pointer-events-none absolute left-1/3 top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-cyan-500/5 blur-[100px]" />
 
       <div className="relative mx-auto max-w-6xl">
-        {/* Header */}
         <div className={cn('mb-12 text-center transition-all duration-700', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
             Adapté à <span className="gradient-text">votre secteur</span>
           </h2>
-          <p className="mx-auto max-w-2xl text-zinc-400">
-            Cliquez sur votre secteur pour voir les automatisations possibles, puis estimez votre gain avec le simulateur.
+          <p className="mx-auto max-w-2xl text-muted">
+            Cliquez sur votre secteur pour voir les automatisations possibles, puis estimez votre gain.
           </p>
         </div>
 
@@ -72,7 +70,7 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
                 'flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all',
                 activeSector === s.id
                   ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/25'
-                  : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50 hover:text-white'
+                  : 'bg-tab text-tab hover-bg-tab hover-text-tab'
               )}
             >
               <span>{s.icon}</span>
@@ -91,7 +89,7 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
                 'flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all',
                 activeSector === s.id
                   ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/25'
-                  : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50 hover:text-white'
+                  : 'bg-tab text-tab hover-bg-tab hover-text-tab'
               )}
             >
               <span>{s.icon}</span>
@@ -100,30 +98,28 @@ export default function SectorSelector({ activeSector, onSectorChange }: Props) 
           ))}
         </div>
 
-        {/* Panneau secteur — agrandi */}
+        {/* Panneau secteur */}
         <div
           key={activeSector}
           className={cn(
-            'rounded-2xl border border-zinc-800 bg-card p-6 transition-all duration-500 sm:p-12',
+            'rounded-2xl border border-panel bg-card p-6 transition-all duration-500 sm:p-12',
             show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           )}
         >
           <div className="grid gap-10">
-            {/* Haut : icône + description + bénéfices */}
             <div>
               <h3 className="mb-3 text-xl font-semibold sm:text-2xl">{current.icon} {current.name}</h3>
-              <p className="mb-6 text-sm text-zinc-400 sm:text-base">{current.description}</p>
+              <p className="mb-6 text-sm text-muted sm:text-base">{current.description}</p>
               <div className="grid gap-3 sm:grid-cols-2">
                 {current.benefits.map((b) => (
-                  <div key={b} className="flex items-start gap-3 text-sm text-zinc-300">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-xs text-violet-400">✓</span>
+                  <div key={b} className="flex items-start gap-3 text-sm text-muted-strong">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-benefit text-xs text-benefit">✓</span>
                     {b}
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Bas : workflows possibles */}
             <div>
               <h4 className="mb-5 text-sm font-semibold uppercase tracking-wider text-cyan-400">
                 Automatisations possibles dans ce secteur

@@ -27,13 +27,32 @@
   --bg: #0a0a0a;
   --fg: #fafafa;
   --muted: #a1a1aa;
+  --muted-strong: #d4d4d8;
   --card-bg: #141416;
   --card-border: #27272a;
   --scrollbar-track: #09090b;
   --scrollbar-thumb: #27272a;
-  --border-light: rgba(255, 255, 255, 0.05);
-  --border-medium: rgba(255, 255, 255, 0.08);
+  --workflow-bg: rgba(0,0,0,0.4);
+  --workflow-border: rgba(255,255,255,0.08);
+  --subtle-border: rgba(255,255,255,0.04);
+  --badge-text: #c4b5fd;
+  --badge-bg: rgba(139,92,246,0.1);
+  --label-bg: rgba(255,255,255,0.04);
+  --label-border: rgb(39,39,42);
   --slider-bg: #27272a;
+  --step-arrow: #3f3f46;
+  --step-label: #a1a1aa;
+  --kpi-label: #52525b;
+  --card-hover-glow: rgba(139,92,246,0.15);
+  --tab-bg: rgba(39,39,42,0.5);
+  --tab-hover-bg: rgba(63,63,70,0.5);
+  --tab-text: #a1a1aa;
+  --tab-hover-text: #ffffff;
+  --panel-border: rgb(39,39,42);
+  --benefit-bg: rgba(139,92,246,0.15);
+  --benefit-text: #c4b5fd;
+  --header-bg: rgba(0,0,0,0.6);
+  --header-border: rgba(255,255,255,0.08);
 }
 
 /* ─── Thème clair ─── */
@@ -41,13 +60,32 @@ html.light {
   --bg: #f8f9fa;
   --fg: #1a1a2e;
   --muted: #6b7280;
+  --muted-strong: #374151;
   --card-bg: #ffffff;
   --card-border: #e5e7eb;
   --scrollbar-track: #f1f3f5;
   --scrollbar-thumb: #d1d5db;
-  --border-light: rgba(0, 0, 0, 0.05);
-  --border-medium: rgba(0, 0, 0, 0.08);
+  --workflow-bg: #f3f4f6;
+  --workflow-border: #e5e7eb;
+  --subtle-border: rgba(0,0,0,0.04);
+  --badge-text: #6d28d9;
+  --badge-bg: rgba(139,92,246,0.08);
+  --label-bg: #ffffff;
+  --label-border: #e5e7eb;
   --slider-bg: #e5e7eb;
+  --step-arrow: #9ca3af;
+  --step-label: #4b5563;
+  --kpi-label: #9ca3af;
+  --card-hover-glow: rgba(139,92,246,0.10);
+  --tab-bg: #ffffff;
+  --tab-hover-bg: #f3f4f6;
+  --tab-text: #6b7280;
+  --tab-hover-text: #1a1a2e;
+  --panel-border: #e5e7eb;
+  --benefit-bg: rgba(139,92,246,0.1);
+  --benefit-text: #6d28d9;
+  --header-bg: rgba(255,255,255,0.85);
+  --header-border: rgba(0,0,0,0.08);
 }
 html.light .gradient-text {
   background: linear-gradient(135deg, #7c3aed, #0891b2);
@@ -91,7 +129,30 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
 html.light ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
-/* ─── Utilitaires ─── */
+/* ─── Utilitaires multi-thème ─── */
+.bg-workflow { background: var(--workflow-bg); }
+.border-workflow { border-color: var(--workflow-border); }
+.text-badge { color: var(--badge-text); }
+.bg-badge { background: var(--badge-bg); }
+.text-step-label { color: var(--step-label); }
+.text-step-arrow { color: var(--step-arrow); }
+.text-kpi-label { color: var(--kpi-label); }
+.border-subtle { border-color: var(--subtle-border); }
+.border-panel { border-color: var(--panel-border); }
+.bg-tab { background: var(--tab-bg); }
+.hover-bg-tab:hover { background: var(--tab-hover-bg); }
+.text-tab { color: var(--tab-text); }
+.hover-text-tab:hover { color: var(--tab-hover-text); }
+.text-muted { color: var(--muted); }
+.text-muted-strong { color: var(--muted-strong); }
+.text-fg { color: var(--fg); }
+.bg-benefit { background: var(--benefit-bg); }
+.text-benefit { color: var(--benefit-text); }
+.bg-header { background: var(--header-bg); }
+.border-header { border-color: var(--header-border); }
+.bg-label { background: var(--label-bg); }
+.border-label { border-color: var(--label-border); }
+
 .gradient-text {
   background: linear-gradient(135deg, #c084fc, #22d3ee);
   -webkit-background-clip: text;
@@ -116,7 +177,7 @@ html.light ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 .card-hover { transition: all 0.3s ease; }
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 30px color-mix(in srgb, #8b5cf6 15%, transparent);
+  box-shadow: 0 8px 30px var(--card-hover-glow);
 }
 
 /* ─── ROI Slider ─── */

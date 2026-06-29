@@ -8,22 +8,20 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800/50 bg-black/60 backdrop-blur-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 border-header bg-header backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        {/* Logo */}
         <button onClick={() => scrollTo('hero')} className="text-lg font-bold tracking-tight">
           Productiv<span className="text-violet-400">AI</span>
         </button>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 text-sm text-zinc-400 sm:flex">
-          <button onClick={() => scrollTo('apps')} className="transition-colors hover:text-white">
+        <nav className="hidden items-center gap-6 text-sm text-muted sm:flex">
+          <button onClick={() => scrollTo('apps')} className="transition-colors hover:text-fg">
             Réalisations
           </button>
-          <button onClick={() => scrollTo('sectors')} className="transition-colors hover:text-white">
+          <button onClick={() => scrollTo('sectors')} className="transition-colors hover:text-fg">
             Secteurs
           </button>
-          <button onClick={() => scrollTo('simulator')} className="transition-colors hover:text-white">
+          <button onClick={() => scrollTo('simulator')} className="transition-colors hover:text-fg">
             Simulateur
           </button>
           <ThemeToggle />
@@ -35,7 +33,6 @@ export default function Header() {
           </button>
         </nav>
 
-        {/* Mobile: toggle + démo */}
         <div className="flex items-center gap-2 sm:hidden">
           <ThemeToggle />
           <button

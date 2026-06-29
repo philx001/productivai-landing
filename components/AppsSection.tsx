@@ -31,7 +31,7 @@ export default function AppsSection() {
           <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
             Nos <span className="gradient-text">réalisations</span>
           </h2>
-          <p className="mx-auto max-w-2xl text-zinc-400">
+          <p className="mx-auto max-w-2xl text-muted">
             Des applications complètes, en production. Cliquez sur une carte pour explorer ses fonctionnalités.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function AppsSection() {
                   {app.icon}
                 </div>
                 <h3 className="mb-0.5 text-base font-semibold">{app.name}</h3>
-                <p className="mb-3 text-xs text-zinc-400">{app.tagline}</p>
+                <p className="mb-3 text-xs text-muted">{app.tagline}</p>
 
                 {/* Workflow diagram */}
                 <div className="mb-3 pointer-events-none">
@@ -63,20 +63,20 @@ export default function AppsSection() {
                 </div>
 
                 {/* KPI badge + description courte */}
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="inline-block rounded-full bg-violet-500/10 px-2.5 py-0.5 text-[10px] font-medium text-violet-300">
+                <div className="mb-2">
+                  <span className="inline-block rounded-full bg-badge px-2.5 py-0.5 text-[10px] font-medium text-badge">
                     {app.kpiLabel}
                   </span>
                 </div>
 
                 {/* Brève description */}
-                <p className="text-[11px] text-zinc-500 leading-relaxed">{app.description}</p>
+                <p className="text-[11px] text-muted leading-relaxed">{app.description}</p>
 
                 {/* Expandable features */}
                 <div className={cn('overflow-hidden transition-all duration-500', isOpen ? 'mt-3 max-h-96 opacity-100' : 'max-h-0 opacity-0')}>
-                  <ul className="space-y-1.5 border-t border-zinc-800 pt-3">
+                  <ul className="space-y-1.5 border-t border-subtle pt-3">
                     {app.features.map((f) => (
-                      <li key={f} className="flex items-start gap-1.5 text-[11px] text-zinc-300">
+                      <li key={f} className="flex items-start gap-1.5 text-[11px] text-muted-strong">
                         <span className="mt-0.5 shrink-0 text-violet-400">✦</span>
                         {f}
                       </li>
@@ -84,7 +84,7 @@ export default function AppsSection() {
                   </ul>
                 </div>
 
-                {!isOpen && <p className="mt-2 text-[10px] text-zinc-600">Cliquez pour voir les fonctionnalités</p>}
+                {!isOpen && <p className="mt-2 text-[10px] text-kpi-label">Cliquez pour voir les fonctionnalités</p>}
               </div>
             );
           })}

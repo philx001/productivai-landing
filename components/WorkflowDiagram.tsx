@@ -107,8 +107,8 @@ export default function WorkflowDiagram({ type, gradient }: { type: string; grad
   const has5 = steps.length >= 5;
 
   return (
-    <div className="w-full rounded-xl border border-zinc-700/50 bg-black/40 p-3 sm:p-4">
-      <span className="mb-2 block text-[10px] font-semibold uppercase tracking-wider text-zinc-500 sm:text-xs">
+    <div className="w-full rounded-xl border border-workflow bg-workflow p-3 sm:p-4">
+      <span className="mb-2 block text-[10px] font-semibold uppercase tracking-wider text-step-label sm:text-xs">
         {wf.title}
       </span>
       <div className={cn(
@@ -126,7 +126,7 @@ export default function WorkflowDiagram({ type, gradient }: { type: string; grad
                 {step.icon}
               </div>
               <span className={cn(
-                'text-center font-medium text-zinc-400 leading-tight',
+                'text-center font-medium leading-tight text-step-label',
                 has5 ? 'text-[8px] sm:text-[10px] max-w-[2.5rem] sm:max-w-[3.5rem]' : 'text-[9px] sm:text-xs max-w-[3rem] sm:max-w-[4.5rem]'
               )}>
                 {step.label}
@@ -134,7 +134,7 @@ export default function WorkflowDiagram({ type, gradient }: { type: string; grad
             </div>
             {i < steps.length - 1 && (
               <span className={cn(
-                'text-zinc-700 shrink-0',
+                'text-step-arrow shrink-0',
                 has5 ? 'text-xs sm:text-base' : 'text-sm sm:text-xl'
               )}>
                 →

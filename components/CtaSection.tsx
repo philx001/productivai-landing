@@ -45,7 +45,7 @@ export default function CtaSection() {
           <span className="gradient-text">application sur-mesure</span> ?
         </h2>
 
-        <p className="mx-auto mb-10 max-w-xl text-lg text-zinc-400">
+        <p className="mx-auto mb-10 max-w-xl text-lg text-muted">
           Parlons de votre projet. Nous configurons une instance de demonstration
           adaptee a votre secteur en 24h. Sans engagement.
         </p>
@@ -59,14 +59,14 @@ export default function CtaSection() {
           </a>
           <a
             href="mailto:contact@productivai.fr"
-            className="rounded-full border border-zinc-700 px-10 py-4 text-base font-medium text-zinc-300 transition-all hover:border-zinc-500 hover:text-white"
+            className="rounded-full border border-label px-10 py-4 text-base font-medium text-zinc-300 transition-all hover:border-zinc-500 hover:text-white"
           >
             contact@productivai.fr
           </a>
         </div>
 
         {/* Trust indicators */}
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-zinc-600">
+        <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-kpi-label">
           <span className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
             Deploiement en 24h
@@ -82,19 +82,19 @@ export default function CtaSection() {
         </div>
 
         {/* Notice: futur formulaire Notion */}
-        <div className="mt-6 text-[10px] text-zinc-700">
+        <div className="mt-6 text-[10px] text-kpi-label">
           Formulaire de contact automatisé (Notion) à venir prochainement.
         </div>
       </div>
 
       {/* Footer */}
-      <div className="relative mx-auto mt-24 max-w-6xl border-t border-zinc-800 pt-8 text-center text-sm text-zinc-600">
+      <div className="relative mx-auto mt-24 max-w-6xl border-t border-panel pt-8 text-center text-sm text-kpi-label">
         <p>
           &copy; {new Date().getFullYear()} ProductivAI &mdash; Des applications qui transforment les donnees
           en decisions.
         </p>
         <div className="mt-2 flex justify-center gap-4">
-          <a href="mailto:contact@productivai.fr" className="transition-colors hover:text-zinc-400">
+          <a href="mailto:contact@productivai.fr" className="transition-colors hover:text-muted">
             Contact
           </a>
           <span>&middot;</span>

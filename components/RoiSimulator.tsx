@@ -118,7 +118,7 @@ export default function RoiSimulator({ sectorId }: Props) {
           <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
             Simulateur <span className="gradient-text">{sector.name}</span>
           </h2>
-          <p className="mx-auto max-w-xl text-zinc-400">
+          <p className="mx-auto max-w-xl text-muted">
             Ajustez les curseurs selon votre situation. Le gain se recalcule en temps réel.
           </p>
         </div>
@@ -137,13 +137,13 @@ export default function RoiSimulator({ sectorId }: Props) {
               <p className="mb-1 text-sm font-medium text-violet-200">
                 Cas concret : {cs.scenario}
               </p>
-              <p className="text-xs leading-relaxed text-zinc-400">{cs.detail}</p>
+              <p className="text-xs leading-relaxed text-muted">{cs.detail}</p>
             </div>
           </div>
         </div>
 
         {/* ─── Simulator ─── */}
-        <div className={cn('rounded-2xl border border-zinc-800 bg-card p-8 transition-all duration-700 sm:p-10', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
+        <div className={cn('rounded-2xl border border-panel bg-card p-8 transition-all duration-700 sm:p-10', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
           <div className="grid gap-8 lg:grid-cols-5">
             {/* Controls */}
             <div className="space-y-7 lg:col-span-3">
@@ -153,21 +153,21 @@ export default function RoiSimulator({ sectorId }: Props) {
             </div>
 
             {/* Result */}
-            <div className="flex flex-col items-center justify-center rounded-xl border border-zinc-800 bg-black/40 p-8 lg:col-span-2">
-              <p className="mb-1 text-center text-sm text-zinc-500">{cfg.resultLabel}</p>
+            <div className="flex flex-col items-center justify-center rounded-xl border border-panel bg-black/40 p-8 lg:col-span-2">
+              <p className="mb-1 text-center text-sm text-muted">{cfg.resultLabel}</p>
               <div className="mb-3 text-center">
                 <span className="text-4xl font-bold gradient-text sm:text-5xl">{fmt(displayAnnual)}</span>
-                <span className="ml-1 text-xl text-zinc-400">€</span>
+                <span className="ml-1 text-xl text-muted">€</span>
               </div>
-              <p className="mb-4 text-center text-xs text-zinc-500">{cfg.unit}</p>
+              <p className="mb-4 text-center text-xs text-muted">{cfg.unit}</p>
 
               <div className="grid w-full grid-cols-2 gap-3 text-center text-xs">
-                <div className="rounded-lg bg-zinc-800/50 p-3">
-                  <p className="text-zinc-500">Par mois</p>
+                <div className="rounded-lg bg-label p-3">
+                  <p className="text-muted">Par mois</p>
                   <p className="text-base font-semibold text-white">{fmt(roi.monthlyGain)} €</p>
                 </div>
-                <div className="rounded-lg bg-zinc-800/50 p-3">
-                  <p className="text-zinc-500">Gain productivité</p>
+                <div className="rounded-lg bg-label p-3">
+                  <p className="text-muted">Gain productivité</p>
                   <p className="text-base font-semibold text-cyan-400">+{roi.productivityGain}%</p>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default function RoiSimulator({ sectorId }: Props) {
                 </div>
               )}
 
-              <p className="mt-3 text-[10px] text-zinc-600 italic text-center">{roi.description}</p>
+              <p className="mt-3 text-[10px] text-kpi-label italic text-center">{roi.description}</p>
             </div>
           </div>
         </div>
@@ -188,18 +188,18 @@ export default function RoiSimulator({ sectorId }: Props) {
         <div
           key={sectorId + '-calc'}
           className={cn(
-            'mt-4 rounded-xl border border-zinc-800 bg-black/30 p-4 transition-all duration-700',
+            'mt-4 rounded-xl border border-panel bg-black/30 p-4 transition-all duration-700',
             show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           )}
         >
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-500">Comment ce chiffre est calculé</p>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted">Comment ce chiffre est calculé</p>
           <div className="space-y-1">
             {calcSteps.map((step, i) => (
-              <p key={i} className="text-xs text-zinc-400">
+              <p key={i} className="text-xs text-muted">
                 {i + 1}. {step}
               </p>
             ))}
-            <p className="mt-1 text-[10px] text-zinc-600">
+            <p className="mt-1 text-[10px] text-kpi-label">
               * Le gain réel dépend du secteur, de votre organisation et des outils déjà en place. Ce simulateur donne un ordre de grandeur basé sur des moyennes constatées.
             </p>
           </div>
@@ -207,7 +207,7 @@ export default function RoiSimulator({ sectorId }: Props) {
 
         {/* CTA */}
         <div className={cn('mt-8 text-center transition-all duration-700', show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0')}>
-          <p className="mb-4 text-sm text-zinc-500">
+          <p className="mb-4 text-sm text-muted">
             Vous voulez un chiffrage précis pour votre activité ? Contactez-nous.
           </p>
           <a
@@ -241,7 +241,7 @@ function Slider({ label, min, max, step, value, onChange }: {
         onChange={(e) => onChange(Number(e.target.value))}
         className="roi-slider w-full"
       />
-      <div className="mt-1 flex justify-between text-xs text-zinc-600">
+      <div className="mt-1 flex justify-between text-xs text-kpi-label">
         <span>{min}</span>
         <span>{max}</span>
       </div>

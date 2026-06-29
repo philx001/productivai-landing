@@ -55,14 +55,14 @@ export default function HeroSection() {
         </h1>
 
         {/* Subtitle */}
-        <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-zinc-400 sm:text-xl">
+        <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
           Nous créons des sites web, des applications métier et des automatisations intelligentes
-          adaptés <strong className="text-zinc-200">à votre activité</strong>.
-          Pas de solution standard, pas de copie — du <strong className="text-zinc-200">sur-mesure</strong> qui résout vos vrais problèmes.
+          adaptés <strong className="text-fg">à votre activité</strong>.
+          Pas de solution standard, pas de copie — du <strong className="text-fg">sur-mesure</strong> qui résout vos vrais problèmes.
         </p>
 
         {/* Trust signals */}
-        <div className="mb-10 flex flex-wrap items-center justify-center gap-6 text-sm text-zinc-500">
+        <div className="mb-10 flex flex-wrap items-center justify-center gap-6 text-sm text-muted">
           <span className="flex items-center gap-1.5">🎯 Écoute & conseil</span>
           <span className="flex items-center gap-1.5">⚡ Applications en production</span>
           <span className="flex items-center gap-1.5">🤝 Accompagnement TPE/PME</span>
