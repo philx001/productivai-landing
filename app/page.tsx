@@ -19,7 +19,7 @@ export default function Home() {
       <HeroSection />
       <BeforeAfterSection />
       <AppsSection />
-      <SectorSelector activeSector={activeSector} onSectorChange={setActiveSector} />
+      <SectorSelector />
       <TestimonialsSection />
       <RoiSimulator sectorId={activeSector} />
       <DiagnosticSection />
